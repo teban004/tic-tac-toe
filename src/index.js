@@ -91,12 +91,15 @@ class Game extends React.Component {
       const col = index>=0 ? (index%3)+1 : index;
       const row = index>=0 ? Math.floor(index/3)+1 : index;
       const location = index===null ? '' : " Move location: (" + col + ',' + row + ')';
+      
+      const buttonStyle = this.state.stepNumber==move ? {fontWeight: 'bold'} : {fontWeight: 'normal'};
+
       const desc = move ?
       'Go to move #' + move:
       'Go to game start';
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>{location}
+          <button style={buttonStyle} onClick={() => this.jumpTo(move)}>{desc}</button>{location}
         </li>
       );
     });
