@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
@@ -20,25 +20,37 @@ class Board extends React.Component {
     );
   }
 
+  renderColumns(size, offset) {
+    let rowColumns = [];
+    for( let colNum=0; colNum < size; colNum++) {
+      rowColumns.push(
+        <React.Fragment key={offset + colNum}>
+          {this.renderSquare(offset + colNum)}
+        </React.Fragment>
+      );
+    }
+    return rowColumns;
+  }
+
+  renderRows(size) {
+    let boardRows = [];
+    for( let rowNum=0; rowNum<size; rowNum++ ) {
+      let offset = rowNum * size;
+      boardRows.push(
+        <div className="board-row" key={rowNum}>
+          {this.renderColumns(size, offset)}
+        </div>
+      );
+    }
+    return boardRows;
+  }
+
   render() {
+    const boardNumRows = 3;
     return (
-      <div>
-       <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
+      <>
+      {this.renderRows(boardNumRows)}
+      </>
     );
   }
 }
