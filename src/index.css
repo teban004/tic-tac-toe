@@ -22,7 +22,7 @@ body {
     border: 1px solid #999;
     float: left;
     font-size: 24px;
-    font-weight: bold;
+    font-weight: normal;
     line-height: 34px;
     height: 34px;
     margin-right: -1px;
@@ -34,6 +34,25 @@ body {
   
   .square:focus {
     outline: none;
+  }
+
+  .square:hover {
+    background-color: lightgray;
+  }
+
+  .squareWinner {
+    background: #7CFC00;
+    border: 1px solid #999;
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+    height: 34px;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 34px;
   }
   
   .kbd-navigation .square:focus {
