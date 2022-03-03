@@ -95,22 +95,40 @@ class Game extends React.Component {
     }
 
     calculateWinner(squares) {
-        const lines = [
-            [0, 1, 2],
-            [3, 4, 5],
-            [6, 7, 8],
-            [0, 3, 6],
-            [1, 4, 7],
-            [2, 5, 8],
-            [0, 4, 8],
-            [2, 4, 6],
-        ];
-        for (let i = 0; i < lines.length; i++) {
-            const [a, b, c] = lines[i];
+        const numSquaresPerSide = this.state.numSquaresPerSide;
+        
+        const winingLines = [];
+        let winingLineDiagonalDown = [];
+        let winingLineDiagonalUp = [];
+        // generate the horizonatal wining lines
+        for( let i=0; i<numSquaresPerSide; i++ ) {
+            let winingLineHorizontal = [];
+            let winingLineVertical = [];
+            
+            for( let j=0; j<numSquaresPerSide; j++ ) {
+                winingLineHorizontal.push((i * numSquaresPerSide) + j);
+                winingLineVertical.push(i + (j * numSquaresPerSide));
+            }
+            // add element to the diagonalDown (back slash) array
+            winingLineDiagonalDown.push((i*numSquaresPerSide)+i);
+            // add element to the diagonalUp (forward slash) array
+            winingLineDiagonalUp.push(((i+1)*numSquaresPerSide) - 1 - i);
+            // add the newly calculated wining lines to the winingLines array 
+            winingLines.push(winingLineHorizontal);
+            winingLines.push(winingLineVertical);
+            
+        }
+        // add the diagonal lines to the winingLines array
+        winingLines.push(winingLineDiagonalDown);
+        winingLines.push(winingLineDiagonalUp);
+        
+        // check if there is a winner line
+        for (let i = 0; i < winingLines.length; i++) {
+            const [a, b, c] = winingLines[i];
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
                 return {
                     'winner': squares[a], 
-                    'winners': lines[i]
+                    'winners': winingLines[i]
                 };
             }
         }
@@ -164,7 +182,7 @@ class Game extends React.Component {
             // create the location text to display for the user
             const locationText = index===null ? '' : " Move location: (" + col + ',' + row + ')';
             // make bold the text of the move that is being displayed on the board
-            const buttonStyle = this.state.stepNumber==move ? {fontWeight: 'bold'} : {fontWeight: 'normal'};
+            const buttonStyle = this.state.stepNumber===move ? {fontWeight: 'bold'} : {fontWeight: 'normal'};
 
             const moveButtonText = move ? 'Go to move #' + move : 'Go to game start';
             return (
